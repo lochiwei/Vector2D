@@ -1,3 +1,3 @@
 # Vector2D
 
-A description of this package.
+A protocol to turn a normal type into a 2D vector.
