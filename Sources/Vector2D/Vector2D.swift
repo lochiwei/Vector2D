@@ -15,7 +15,7 @@ infix operator ** : MultiplicationPrecedence  // non-proportional scale
 infix operator **=: MultiplicationPrecedence
 
 // 🅿️ Vector2D
-public protocol Vector2D: ExpressibleByArrayLiteral {
+public protocol Vector2D: ExpressibleByArrayLiteral, Rectangular {
     
     associatedtype Field: FloatingPoint     // support +,-,*,/
     
@@ -27,12 +27,12 @@ public protocol Vector2D: ExpressibleByArrayLiteral {
     init(x: Field, y: Field)
     
     // vector addition: u + v
+    // (default implementation provided)
     static func + (u: Self, v: Self) -> Self
-    // additive inverse: -v
-    static prefix func - (u: Self) -> Self
     
-    // scalar multiplication: a * v
-    // has default implementation in extension
+    // additive inverse: -v
+    // (default implementation provided)
+    static prefix func - (u: Self) -> Self
 }
 
 // MARK: - Vector2D protocol extension -
@@ -149,6 +149,8 @@ extension Vector2D where Field == CGFloat {
         Self.init(x: r * cos(a), y: r * sin(a))
     }
     
+    /* ------- Vector2D to CGPoint ------- */
+    
     /// turn a `Vector2D` into `CGPoint`
     ///
     /// Example:
@@ -158,6 +160,11 @@ extension Vector2D where Field == CGFloat {
     /// ```
     public var point: CGPoint { CGPoint(x: x, y: y) }
     
+    /* ------- `Rectangular` conformance ------- */
+    
+    // automatically conforms to `Rectangular`
+    public var origin: CGPoint { .zero }
+    public var size  : CGSize  {  CGSize(width: x, height: y) }
 }
 
 // MARK: - Conforming Types -

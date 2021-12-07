@@ -137,27 +137,8 @@ extension Rectangular {
 // 🌀CGRect + 🅿️ Rectangular
 extension CGRect: Rectangular { }
 
+// the following conforms to `Rectangular` automatically
 // 🌀CGSize + 🅿️ Rectangular
-extension CGSize: Rectangular {
-    public var origin: CGPoint { .zero }
-    public var size  : CGSize  {  self }
-}
-
 // 🌀CGPoint + 🅿️ Rectangular
-extension CGPoint: Rectangular {
-    public var origin: CGPoint { .zero }
-    public var size  : CGSize  {  CGSize(width: x, height: y) }
-}
-
 // 🌀UnitPoint + 🅿️ Rectangular
-@available(iOS 13, macOS 10.15, *)
-extension UnitPoint: Rectangular {
-    public var origin: CGPoint { .zero }
-    public var size  : CGSize  {  CGSize(width: x, height: y) }
-}
-
-@available(iOS 13, macOS 10.15, *)
 // 🌀GeometryProxy + 🅿️ Rectangular
-extension GeometryProxy: Rectangular {
-    public var origin: CGPoint { .zero }
-}
