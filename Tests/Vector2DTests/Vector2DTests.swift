@@ -2,10 +2,18 @@ import XCTest
 @testable import Vector2D
 
 final class Vector2DTests: XCTestCase {
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-//        XCTAssertEqual(Vector2D().text, "Hello, World!")
+    
+    /// test `point.as(CGSize.self)`
+    func testPointAsSize() {
+        let p = CGPoint(1, 2)
+        let s = CGSize(1, 2)
+        XCTAssertEqual(p.as(CGSize.self), s)
+    }
+    
+    /// test `CGSize(point)`
+    func testSizeInitWithPoint() {
+        let s1 = CGSize(1, 2)
+        let s2 = CGSize(CGPoint(1, 2))
+        XCTAssertEqual(s1, s2)
     }
 }

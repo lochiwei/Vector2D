@@ -2,8 +2,9 @@
 //  Vector2D.swift
 //  --------------
 //
-//  1.0.0: 2020.10.10
+//  1.0.0:
 //  1.0.1: + .point
+//  1.0.2: + .as<T>(_:), .init<T>(_:)
 //
 
 import SwiftUI
@@ -35,7 +36,7 @@ public protocol Vector2D: ExpressibleByArrayLiteral, Rectangular {
     static prefix func - (u: Self) -> Self
 }
 
-// MARK: - Vector2D protocol extension -
+// MARK: - protocol extension -
 
 // default behaviors
 extension Vector2D {
@@ -134,6 +135,35 @@ extension Vector2D {
     
 }
 
+// MARK: - same Field -
+
+extension Vector2D {
+    
+    /// convert one conforming type to another type
+    /// with the **same vector field**.
+    ///
+    /// Example:
+    /// ```
+    /// let u = CGPoint(x: 1, y: 2)
+    /// u.as(CGSize.self)             // CGSize
+    /// ```
+    public func `as`<T:Vector2D>(_ typeT: T.Type) -> T where T.Field == Self.Field {
+        return typeT.init(x: x, y: y)
+    }
+    
+    /// convert one conforming type to another type
+    /// with the **same vector field**.
+    ///
+    /// Example:
+    /// ```
+    /// let u = CGPoint(x: 1, y: 2)
+    /// CGSize(u)                     // CGSize
+    /// ```
+    public init<T: Vector2D>(_ v: T) where T.Field == Self.Field {
+        self.init(x: v.x, y: v.y)
+    }
+}
+
 // MARK: - Field == CGFloat -
 
 extension Vector2D where Field == CGFloat {
@@ -158,13 +188,13 @@ extension Vector2D where Field == CGFloat {
     /// let size = CGSize(width: 20, height: 30)
     /// let p = size.point      // CGPoint(x: 20, y: 30)
     /// ```
-    public var point: CGPoint { CGPoint(x: x, y: y) }
+    public var point: CGPoint { CGPoint(x: x, y: y) }               // point: to CGPoint
     
     /* ------- `Rectangular` conformance ------- */
     
     // automatically conforms to `Rectangular`
     public var origin: CGPoint { .zero }
-    public var size  : CGSize  {  CGSize(width: x, height: y) }
+    public var size  : CGSize  {  CGSize(width: x, height: y) }     // size: to CGSize
 }
 
 // MARK: - Conforming Types -
